@@ -234,6 +234,9 @@ func (k *Kubernetes) tail(ctx context.Context, spec *Spec, step *Step, output io
 		SubResource("log").
 		VersionedParams(opts, scheme.ParameterCodec)
 
+	// Temporary coverup possible race condition.
+	time.Sleep(2 * time.Second)
+
 	readCloser, err := req.Stream()
 	if err != nil {
 		return err
